@@ -3,8 +3,10 @@ package kr.ac.ks.app.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,17 @@ public class Lesson {
     private List<Course> courses = new ArrayList<>();
 
     public Lesson() {
+    }
+
+    public Lesson(long id,String name,int quota) {
+        this.id=id;
+        this.name=name;
+        this.quota=quota;
+    }
+    public Lesson(String id,String name,String quota) {
+        this.id=Long.parseLong(id);
+        this.name=name;
+        this.quota=Integer.parseInt(quota);
     }
 
     @Builder

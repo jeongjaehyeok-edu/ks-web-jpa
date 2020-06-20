@@ -9,13 +9,9 @@ import kr.ac.ks.app.repository.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -71,8 +67,6 @@ public class CourseController {
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         List<Student> students = studentRepository.findAll();
         List<Lesson> lessons = lessonRepository.findAll();
-
-//        model.addAttribute("id",id);
         model.addAttribute("students", students);
         model.addAttribute("lessons", lessons);
         Course course = courseRepository.findById(id)
@@ -91,28 +85,17 @@ public class CourseController {
                                @PathVariable("id") long id,
                                BindingResult result,
                                Model model){
-////        if (result.hasErrors()) {
-////            course.setId(id);
-////            return "courses/update_course";
-////        }
-//        Student student = studentRepository.findById(studentId).get();
-//        Lesson lesson = lessonRepository.findById(lessonId).get();
-//        System.out.println("id:"+id+", stid:"+studentId+", lesson :"+lessonId);
-//        Course course = new Course();
-//        course.setId(Long.parseLong(id));
-//        course.setLesson(lesson);
-//        course.setStudent(student);
-//        courseRepository.save(course);
-//        model.addAttribute("course",courseRepository.findAll());
-//        return "redirect:/courses";
-//    }
-
-
         course.setStudent(studentRepository.findById(studentId).get());
         course.setLesson(lessonRepository.findById(lessonId).get());
         courseRepository.save(course);
         model.addAttribute("course",courseRepository.findAll());
-
         return "redirect:/courses";
+    }
+
+    @GetMapping("/course_count")
+    public String courseCount(Model model){
+        List<Lesson> counts = courseRepository.findByGroupCount();
+        model.addAttribute("counts",counts);
+        return "courses/course_count";
     }
 }
