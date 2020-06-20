@@ -12,7 +12,6 @@
             <th>학생명</th>
             <th>수업명</th>
             <th>인원</th>
-            <th>Empty seats</th>
             <th>수정</th>
             <th>삭제</th>
         </tr>
@@ -23,7 +22,6 @@
             <td th:text="${course.student.name}"></td>
             <td th:text="${course.lesson.name}"></td>
             <td th:text="${course.lesson.quota}"></td>
-            <td th:text="1234"></td>
             <td>
                 <a th:href="@{/course/edit/{id}(id=${course.id})}" class="btn btn-primary" role="button">수정</a>
             </td>

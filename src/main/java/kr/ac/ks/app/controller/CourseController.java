@@ -91,11 +91,4 @@ public class CourseController {
         model.addAttribute("course",courseRepository.findAll());
         return "redirect:/courses";
     }
-
-    @GetMapping("/course_count")
-    public String courseCount(Model model){
-        List<Lesson> counts = courseRepository.findByGroupCount();
-        model.addAttribute("counts",counts);
-        return "courses/course_count";
-    }
 }
