@@ -8,10 +8,13 @@ import kr.ac.ks.app.repository.LessonRepository;
 import kr.ac.ks.app.repository.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,6 +55,45 @@ public class CourseController {
         List<Course> courses = courseRepository.findAll();
         model.addAttribute("courses", courses);
         return "courses/courseList";
+    }
+
+
+    @GetMapping("/course/delete/{id}")
+    public String delete(@PathVariable("id") long id) {
+        System.out.println(id+"i~~~~~~~d~~~~~~~");
+        Course course = courseRepository.getOne(id);
+        courseRepository.delete(course);
+
+        return "redirect:/courses";
+    }
+
+    @GetMapping("/course/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
+
+        model.addAttribute("course",course);
+        return "courses/update_course";
+    }
+
+    @PostMapping("/course/update")
+    public String updateCourse(@RequestParam("studentId") Long studentId,
+                               @RequestParam("lessonId") Long lessonId,
+                               @PathVariable("id") long id,
+                               @Valid Course course,
+                               BindingResult result,
+                               Model model){
+
+        if (result.hasErrors()) {
+            course.setId(id);
+            return "courses/update_course";
+        }
+        Student student = studentRepository.findById(studentId).get();
+        Lesson lesson = lessonRepository.findById(lessonId).get();
+        course = Course.createCourse(student,lesson);
+        courseRepository.save(course);
+        model.addAttribute("course",courseRepository.findAll());
+        return "redirect:/courses";
     }
 
 }

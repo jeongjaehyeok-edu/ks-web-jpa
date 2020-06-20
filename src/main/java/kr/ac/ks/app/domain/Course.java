@@ -23,6 +23,7 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     private Lesson lesson;
 
+
     public void setStudent(Student student) {
         this.student = student;
         this.student.getCourses().add(this);

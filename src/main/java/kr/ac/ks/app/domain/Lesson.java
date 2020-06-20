@@ -20,6 +20,7 @@ public class Lesson {
     private int quota;
 
     @OneToMany
+    @JoinColumn(name = "lesson_id")
     private List<Course> courses = new ArrayList<>();
 
     public Lesson() {

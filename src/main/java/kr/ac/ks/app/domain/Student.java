@@ -2,10 +2,7 @@ package kr.ac.ks.app.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +18,7 @@ public class Student {
     private String email;
 
     @OneToMany
+    @JoinColumn(name = "student_id")
     private List<Course> courses = new ArrayList<>();
 
     public Student() {
@@ -28,6 +26,12 @@ public class Student {
 
     @Builder
     public Student(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+    @Builder
+    public Student(Long id,String name, String email) {
+        this.id=id;
         this.name = name;
         this.email = email;
     }

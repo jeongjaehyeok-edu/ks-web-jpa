@@ -5,6 +5,7 @@
 
 <div class="container">
     <div th:replace="fragments/homeButton :: homeButton"/>
+    <form>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -23,14 +24,15 @@
             <td th:text="${course.lesson.name}"></td>
             <td th:text="${course.lesson.quota}"></td>
             <td>
-                <a href="#" class="btn btn-primary" role="button">수정</a>
+                <a th:href="@{/course/edit/{id}(id=${course.id})}" class="btn btn-primary" role="button">수정</a>
             </td>
             <td>
-                <a href="#" class="btn btn-primary" role="button">삭제</a>
+                <a th:href="@{/course/delete/{id}(id=${course.id})}"  class="btn btn-primary" role="button">삭제</a>
             </td>
         </tr>
         </tbody>
     </table>
+    </form>
 </div>
 <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
