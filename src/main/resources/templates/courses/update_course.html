@@ -4,7 +4,8 @@
 <body>
 <div class="container">
     <div th:replace="fragments/homeButton :: homeButton"/>
-    <form role="form" action="/course/update" method="post">
+    <form role="form" th:action="@{/course/update/{id}(id=${course.id})}" th:object="${course}"
+          method="post">
         <div class="form-group">
             <label for="student">학생</label>
             <select name="studentId" id="student" class="form-control">
@@ -20,6 +21,12 @@
                 <option th:each="lesson : ${lessons}"
                         th:value="${lesson.id}" th:text="${lesson.name}"/>
             </select>
+        </div>
+         <div class="form-group" style="display : none">
+            <label th:for="id"></label>
+            <input type="text" name="id" id="id" th:field="*{id}" th:value="${id}" class="form-control"
+                   th:class="${#fields.hasErrors('id')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Incorrect date</p>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

@@ -30,7 +30,6 @@ public class StudentController {
         if (result.hasErrors()) {
             return "students/studentForm";
         }
-
         Student student = new Student();
         student.setName(studentForm.getName());
         student.setEmail(studentForm.getEmail());
@@ -66,7 +65,6 @@ public class StudentController {
             student.setId(id);
             return "students/update_student";
         }
-
         studentRepository.save(student);
         model.addAttribute("student",studentRepository.findAll());
         return "redirect:/students";

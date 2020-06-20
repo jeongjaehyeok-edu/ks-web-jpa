@@ -18,7 +18,7 @@ public class Student {
     private String email;
 
     @OneToMany
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id", updatable = false)
     private List<Course> courses = new ArrayList<>();
 
     public Student() {

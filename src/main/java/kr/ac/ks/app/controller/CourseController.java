@@ -69,6 +69,12 @@ public class CourseController {
 
     @GetMapping("/course/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        List<Student> students = studentRepository.findAll();
+        List<Lesson> lessons = lessonRepository.findAll();
+
+//        model.addAttribute("id",id);
+        model.addAttribute("students", students);
+        model.addAttribute("lessons", lessons);
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
 
@@ -76,24 +82,37 @@ public class CourseController {
         return "courses/update_course";
     }
 
-    @PostMapping("/course/update")
+    @PostMapping("/course/update/{id}")
     public String updateCourse(@RequestParam("studentId") Long studentId,
                                @RequestParam("lessonId") Long lessonId,
-                               @PathVariable("id") long id,
+                               @Valid Lesson lesson,
+                               @Valid Student student,
                                @Valid Course course,
+                               @PathVariable("id") long id,
                                BindingResult result,
                                Model model){
+////        if (result.hasErrors()) {
+////            course.setId(id);
+////            return "courses/update_course";
+////        }
+//        Student student = studentRepository.findById(studentId).get();
+//        Lesson lesson = lessonRepository.findById(lessonId).get();
+//        System.out.println("id:"+id+", stid:"+studentId+", lesson :"+lessonId);
+//        Course course = new Course();
+//        course.setId(Long.parseLong(id));
+//        course.setLesson(lesson);
+//        course.setStudent(student);
+//        courseRepository.save(course);
+//        model.addAttribute("course",courseRepository.findAll());
+//        return "redirect:/courses";
+//    }
 
-        if (result.hasErrors()) {
-            course.setId(id);
-            return "courses/update_course";
-        }
-        Student student = studentRepository.findById(studentId).get();
-        Lesson lesson = lessonRepository.findById(lessonId).get();
-        course = Course.createCourse(student,lesson);
+
+        course.setStudent(studentRepository.findById(studentId).get());
+        course.setLesson(lessonRepository.findById(lessonId).get());
         courseRepository.save(course);
         model.addAttribute("course",courseRepository.findAll());
+
         return "redirect:/courses";
     }
-
 }
