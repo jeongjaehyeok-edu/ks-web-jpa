@@ -33,11 +33,6 @@ public class Lesson {
         this.name=name;
         this.quota=quota;
     }
-    public Lesson(String id,String name,String quota) {
-        this.id=Long.parseLong(id);
-        this.name=name;
-        this.quota=Integer.parseInt(quota);
-    }
 
     @Builder
     public Lesson(String name, int quota) {

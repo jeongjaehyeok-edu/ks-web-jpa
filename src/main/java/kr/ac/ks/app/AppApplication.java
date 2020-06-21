@@ -1,5 +1,6 @@
 package kr.ac.ks.app;
 
+import kr.ac.ks.app.domain.Course;
 import kr.ac.ks.app.domain.Lesson;
 import kr.ac.ks.app.domain.Student;
 import kr.ac.ks.app.repository.CourseRepository;

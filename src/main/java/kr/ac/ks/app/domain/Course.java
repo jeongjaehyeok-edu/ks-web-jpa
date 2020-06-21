@@ -23,6 +23,9 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY,cascade =CascadeType.MERGE)
     private Lesson lesson;
 
+    public Course(){
+
+    }
 
     public void setStudent(Student student) {
         this.student = student;

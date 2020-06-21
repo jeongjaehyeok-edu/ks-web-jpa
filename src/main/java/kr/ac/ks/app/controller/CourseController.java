@@ -12,7 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CourseController {
@@ -90,5 +92,32 @@ public class CourseController {
         courseRepository.save(course);
         model.addAttribute("course",courseRepository.findAll());
         return "redirect:/courses";
+    }
+
+    @GetMapping("/courses/count")
+    public String Count(Model model){
+        List<Lesson> lessons = lessonRepository.findAll();
+        List<Course> courses = courseRepository.findAll();
+        Iterator<Lesson> iter_lessons = lessons.iterator();
+        Iterator<Course> iter_courses = courses.iterator();
+
+
+        Lesson lesson_temp = new Lesson();
+        Course course_temp = new Course();
+        int i = 0;
+        while (iter_lessons.hasNext()) {
+            lesson_temp=iter_lessons.next();
+            iter_courses = courses.iterator();
+            while(iter_courses.hasNext()){
+                course_temp=iter_courses.next();
+                if(lesson_temp.getId().longValue()==course_temp.getLesson().getId().longValue()){
+                    lesson_temp.setQuota(lesson_temp.getQuota()-1);
+                    lessons.set(i,lesson_temp);
+                }
+            }
+            i++;
+        }
+        model.addAttribute("lessons",lessons);
+        return "/courses/count";
     }
 }
