@@ -17,8 +17,7 @@ public class Student {
     private String name;
     private String email;
 
-    @OneToMany
-    @JoinColumn(name = "student_id", updatable = false)
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
     private List<Course> courses = new ArrayList<>();
 
     public Student() {

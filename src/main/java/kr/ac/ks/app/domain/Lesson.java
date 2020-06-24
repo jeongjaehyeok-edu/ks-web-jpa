@@ -21,8 +21,7 @@ public class Lesson {
     private String name;
     private int quota;
 
-    @OneToMany
-    @JoinColumn(name = "lesson_id", updatable = false)
+    @OneToMany(mappedBy = "lesson",cascade = CascadeType.ALL)
     private List<Course> courses = new ArrayList<>();
 
     public Lesson() {

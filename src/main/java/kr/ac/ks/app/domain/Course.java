@@ -17,10 +17,13 @@ public class Course {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @JoinColumn(name ="student_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade =CascadeType.MERGE)
+
+    @JoinColumn(name ="lesson_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Lesson lesson;
 
     public Course(){
