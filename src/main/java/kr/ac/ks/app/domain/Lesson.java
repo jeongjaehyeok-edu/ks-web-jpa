@@ -27,12 +27,6 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Lesson(long id,String name,int quota) {
-        this.id=id;
-        this.name=name;
-        this.quota=quota;
-    }
-
     @Builder
     public Lesson(String name, int quota) {
         this.name = name;
