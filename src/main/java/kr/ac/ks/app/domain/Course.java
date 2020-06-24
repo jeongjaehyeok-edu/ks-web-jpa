@@ -31,13 +31,23 @@ public class Course {
     }
 
     public void setStudent(Student student) {
+        if(this.student != null){
+            this.student.getCourses().remove(this);
+        }
         this.student = student;
-        this.student.getCourses().add(this);
+        if(student != null){
+            this.student.getCourses().add(this);
+        }
     }
 
     public void setLesson(Lesson lesson) {
+        if(this.lesson != null){
+            this.lesson.getCourses().remove(this);
+        }
         this.lesson = lesson;
-        this.lesson.getCourses().add(this);
+        if(lesson != null){
+            this.lesson.getCourses().add(this);
+        }
     }
 
     public static Course createCourse(Student student, Lesson... lessons) {
