@@ -18,12 +18,12 @@ public class Course {
     private Long id;
 
     @JoinColumn(name ="student_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     private Student student;
 
 
     @JoinColumn(name ="lesson_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     private Lesson lesson;
 
     public Course(){
