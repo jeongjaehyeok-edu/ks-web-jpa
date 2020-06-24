@@ -43,6 +43,7 @@ public class CourseController {
                                ) {
         Student student = studentRepository.findById(studentId).get();
         Lesson lesson = lessonRepository.findById(lessonId).get();
+        lesson.setQuota(lesson.getQuota()-1);
         Course course = Course.createCourse(student,lesson);
         Course savedCourse = courseRepository.save(course);
         return "redirect:/courses";
@@ -58,8 +59,8 @@ public class CourseController {
 
     @GetMapping("/course/delete/{id}")
     public String delete(@PathVariable("id") long id) {
-        System.out.println(id+"i~~~~~~~d~~~~~~~");
         Course course = courseRepository.getOne(id);
+        course.getLesson().setQuota(course.getLesson().getQuota()+1);
         courseRepository.delete(course);
 
         return "redirect:/courses";
